@@ -95,3 +95,10 @@ clean-all:
     rm -rf artifacts cache
     forge clean
     rm -rf node_modules
+
+custom-do-it:
+    ../just compile
+    npx hardhat run scripts/mintPoints.js --network optimism
+    ../just deploy base optimism
+    ../just send-packet base
+    npx hardhat run scripts/getBalance.js --network optimism

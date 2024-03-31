@@ -2,22 +2,35 @@
 
 pragma solidity ^0.8.9;
 
-import "./base/UniversalChanIbcApp.sol";
+import './base/UniversalChanIbcApp.sol';
+import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 
-contract XCounterUC is UniversalChanIbcApp {
-    // application specific state
-    uint64 public counter;
-    mapping(uint64 => address) public counterMap;
+contract PolyPTS is UniversalChanIbcApp, ERC20 {
+    event TokenMint(address indexed receiver, uint256 amount);
+    event TokenBurn(address indexed receiver, uint256 amount);
+    event TransferSuccess();
+    event TransferFailure();
 
-    constructor(address _middleware) UniversalChanIbcApp(_middleware) {}
-
-    // application specific logic
-    function resetCounter() internal {
-        counter = 0;
+    enum NFTType {
+        POLY1,
+        POLY2,
+        POLY3,
+        POLY4,
+        RAND
     }
 
-    function increment() internal {
-        counter++;
+    enum Operation {
+        mint, burn
+    }
+
+    constructor(address _middleware) UniversalChanIbcApp(_middleware) ERC20('point', 'PTS') {}
+
+    function mint(address account, uint256 amount) public virtual onlyOwner {
+        _mint(account, amount);
+    }
+
+    function burn(address account, uint256 amount) public virtual onlyOwner {
+        _burn(account, amount);
     }
 
     // IBC logic
@@ -29,8 +42,7 @@ contract XCounterUC is UniversalChanIbcApp {
      * @param timeoutSeconds The timeout in seconds (relative).
      */
     function sendUniversalPacket(address destPortAddr, bytes32 channelId, uint64 timeoutSeconds) external {
-        increment();
-        bytes memory payload = abi.encode(msg.sender, counter);
+        bytes memory payload = abi.encode(msg.sender, 5124);
 
         uint64 timeoutTimestamp = uint64((block.timestamp + timeoutSeconds) * 1000000000);
 
@@ -39,13 +51,6 @@ contract XCounterUC is UniversalChanIbcApp {
         );
     }
 
-    /**
-     * @dev Packet lifecycle callback that implements packet receipt logic and returns and acknowledgement packet.
-     *      MUST be overriden by the inheriting contract.
-     *
-     * @param channelId the ID of the channel (locally) the packet was received on.
-     * @param packet the Universal packet encoded by the source and relayed by the relayer.
-     */
     function onRecvUniversalPacket(bytes32 channelId, UniversalPacket calldata packet)
         external
         override
@@ -54,12 +59,17 @@ contract XCounterUC is UniversalChanIbcApp {
     {
         recvedPackets.push(UcPacketWithChannel(channelId, packet));
 
-        (address payload, uint64 c) = abi.decode(packet.appData, (address, uint64));
-        counterMap[c] = payload;
+        (address sender, Operation op, uint256 amount, NFTType pType, uint256 tokenId) = abi.decode(packet.appData, (address, Operation, uint256, NFTType, uint256));
+                
+        if (op == Operation.mint) {
+            _burn(sender, amount);
+            return AckPacket(true, abi.encode(sender, op, pType, tokenId));
+        } else if (op == Operation.burn) {
+            _mint(sender, amount);
+            return AckPacket(true, abi.encode(sender, op, pType, tokenId));
+        }
 
-        increment();
-
-        return AckPacket(true, abi.encode(counter));
+        return AckPacket(false, abi.encode(0));
     }
 
     /**
@@ -80,19 +90,9 @@ contract XCounterUC is UniversalChanIbcApp {
         // decode the counter from the ack packet
         (uint64 _counter) = abi.decode(ack.data, (uint64));
 
-        if (_counter != counter) {
-            resetCounter();
-        }
     }
 
-    /**
-     * @dev Packet lifecycle callback that implements packet receipt logic and return and acknowledgement packet.
-     *      MUST be overriden by the inheriting contract.
-     *      NOT SUPPORTED YET
-     *
-     * @param channelId the ID of the channel (locally) the timeout was submitted on.
-     * @param packet the Universal packet encoded by the counterparty and relayed by the relayer
-     */
+
     function onTimeoutUniversalPacket(bytes32 channelId, UniversalPacket calldata packet) external override onlyIbcMw {
         timeoutPackets.push(UcPacketWithChannel(channelId, packet));
         // do logic

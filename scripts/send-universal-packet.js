@@ -17,8 +17,6 @@ async function main() {
     // Get the contract type from the config and get the contract
     const ibcApp = await getIbcApp(networkName);
 
-    // Do logic to prepare the packet
-
     // If the network we are sending on is optimism, we need to use the base port address and vice versa
     const destPortAddr = networkName === "optimism" ?
       config["sendUniversalPacket"]["base"]["portAddr"] :
@@ -28,12 +26,14 @@ async function main() {
     const timeoutSeconds = sendConfig[`${networkName}`]["timeout"];
     
     // Send the packet
-    await ibcApp.connect(accounts[0]).sendUniversalPacket(
-        destPortAddr,
-        channelIdBytes,
-        timeoutSeconds,
-        // Define and pass optionalArgs appropriately or remove if not needed
-    );
+    //await ibcApp.connect(accounts[0]).crossChainMint( destPortAddr, channelIdBytes, timeoutSeconds, 0);
+    //await ibcApp.connect(accounts[0]).crossChainMint( destPortAddr, channelIdBytes, timeoutSeconds, 1);
+    //await ibcApp.connect(accounts[0]).crossChainMint( destPortAddr, channelIdBytes, timeoutSeconds, 2);
+    //await ibcApp.connect(accounts[0]).crossChainMint( destPortAddr, channelIdBytes, timeoutSeconds, 3);
+    //await ibcApp.connect(accounts[0]).crossChainMint( destPortAddr, channelIdBytes, timeoutSeconds, 4);
+
+    // Send the packet
+    await ibcApp.connect(accounts[0]).crossChainBurn( destPortAddr, channelIdBytes, timeoutSeconds, 1);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
