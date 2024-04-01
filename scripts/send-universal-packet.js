@@ -26,14 +26,9 @@ async function main() {
     const timeoutSeconds = sendConfig[`${networkName}`]["timeout"];
     
     // Send the packet
-    //await ibcApp.connect(accounts[0]).crossChainMint( destPortAddr, channelIdBytes, timeoutSeconds, 0);
-    //await ibcApp.connect(accounts[0]).crossChainMint( destPortAddr, channelIdBytes, timeoutSeconds, 1);
-    //await ibcApp.connect(accounts[0]).crossChainMint( destPortAddr, channelIdBytes, timeoutSeconds, 2);
-    //await ibcApp.connect(accounts[0]).crossChainMint( destPortAddr, channelIdBytes, timeoutSeconds, 3);
-    //await ibcApp.connect(accounts[0]).crossChainMint( destPortAddr, channelIdBytes, timeoutSeconds, 4);
+    await ibcApp.connect(accounts[0]).crossChainMint( destPortAddr, channelIdBytes, timeoutSeconds, 3); // 3 is token type 0 to 3, random for 4
 
-    // Send the packet
-    await ibcApp.connect(accounts[0]).crossChainBurn( destPortAddr, channelIdBytes, timeoutSeconds, 1);
+    //await ibcApp.connect(accounts[0]).crossChainBurn( destPortAddr, channelIdBytes, timeoutSeconds, 1); // 1 is tokenId
 }
 
 // We recommend this pattern to be able to use async/await everywhere

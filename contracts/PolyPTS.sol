@@ -62,10 +62,10 @@ contract PolyPTS is UniversalChanIbcApp, ERC20 {
         (address sender, Operation op, uint256 amount, NFTType pType, uint256 tokenId) = abi.decode(packet.appData, (address, Operation, uint256, NFTType, uint256));
                 
         if (op == Operation.mint) {
-            _burn(sender, amount);
+            _burn(sender, amount*10**18);
             return AckPacket(true, abi.encode(sender, op, pType, tokenId));
         } else if (op == Operation.burn) {
-            _mint(sender, amount);
+            _mint(sender, amount*10**18);
             return AckPacket(true, abi.encode(sender, op, pType, tokenId));
         }
 

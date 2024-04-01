@@ -43,6 +43,7 @@ contract PolyNFT is UniversalChanIbcApp, ERC721 {
     }
 
     function mint(address recipient, NFTType pType) internal returns (uint256) {
+        require(pType != NFTType.RAND);
         currentTokenId += 1;
         uint256 tokenId = currentTokenId;
         tokenTypeMap[tokenId] = pType;

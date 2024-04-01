@@ -8,7 +8,7 @@ async function main() {
 
     const ibcApp = await getIbcApp(networkName);
 
-    contractOwner = "0xBF76e1F6457c04D6bBe709Eb1617246757B7974b";
+    const contractOwner = ""; // change to your own
     const bal1 = await ibcApp.connect(accounts[0]).balanceOf(contractOwner);
     console.log("contractOwner has ", bal1, "points");
 }

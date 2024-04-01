@@ -8,14 +8,14 @@ async function main() {
 
     const ibcApp = await getIbcApp(networkName);
 
-    contractOwner = "0xBF76e1F6457c04D6bBe709Eb1617246757B7974b";
-    //SpinWheelGame = "0x051955Fc3cFA2FD02BA117D178d72aAc398c8129";
-    await ibcApp.connect(accounts[0]).mint(contractOwner, 5000);
-    //await ibcApp.connect(accounts[0]).mint(SpinWheelGame, 1000000);
+    const contractOwner = "";  // change to your own
+    const SpinWheelGame = "0x3DACA6eB95A079e6678Fb45dF53F3c64BF246fE3";
+    await ibcApp.connect(accounts[0]).mint(contractOwner, 1000);
+    await ibcApp.connect(accounts[0]).mint(SpinWheelGame, 1000000);
     const bal1 = await ibcApp.connect(accounts[0]).balanceOf(contractOwner);
-    //const bal2 = await ibcApp.connect(accounts[0]).balanceOf(SpinWheelGame);
+    const bal2 = await ibcApp.connect(accounts[0]).balanceOf(SpinWheelGame);
     console.log("contractOwner has ", bal1, "points");
-    //console.log("SpinWheelGame has ", bal2, "points");
+    console.log("SpinWheelGame has ", bal2, "points");
 }
 
 // We recommend this pattern to be able to use async/await everywhere
