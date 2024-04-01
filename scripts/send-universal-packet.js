@@ -24,6 +24,7 @@ async function main() {
     const channelId = sendConfig[`${networkName}`]["channelId"];
     const channelIdBytes = hre.ethers.encodeBytes32String(channelId);
     const timeoutSeconds = sendConfig[`${networkName}`]["timeout"];
+
     
     // Send the packet
     await ibcApp.connect(accounts[0]).crossChainMint( destPortAddr, channelIdBytes, timeoutSeconds, 3); // 3 is token type 0 to 3, random for 4

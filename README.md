@@ -1,3 +1,24 @@
+[PolyPTS]
+https://optimism-sepolia.blockscout.com/address/0x50845E818229fFE8Eb39dcB77541a447285b446F?tab=write_contract
+>> read balanceOf(your address) to get current points
+
+[PolyNFT]
+https://base-sepolia.blockscout.com/address/0x01d4a540743D717C311a86C5fE8Bff5a46AaBd9A?tab=write_contract
+>> write crossChainMint() to spend points to mint NFT
+>> write crossChainBurn() to burn NFT and get refunds
+    destAddr please fill: 0x50845E818229fFE8Eb39dcB77541a447285b446F
+    channelId please fill: 0x6368616e6e656c2d313100000000000000000000000000000000000000000000
+    timeoutsecond please fill: 36000
+    pType please fill 0~3 corresponding to one of the four types of NFT; fill 5 to mint a random one
+    tokenIdforBurn please fill Id of one of your holding token
+
+[SpinWheelGame]
+https://optimism-sepolia.blockscout.com/address/0x3DACA6eB95A079e6678Fb45dF53F3c64BF246fE3?tab=write_contract
+>> write spinTheWheel to get random PTS from 1 to 10 (five minutes between each spin)
+
+*front-end not done
+==================================================================================================
+
 # ⛓️🔗⛓️ Template for IBC enabled Solidity contracts
 
 This repo provides a starter project to build [IBC](https://github.com/cosmos/ibc) enabled Solidity contracts that connect rollups to one another Polymer Hub, through the [vIBC core contracts](https://github.com/open-ibc/vibc-core-smart-contracts).
