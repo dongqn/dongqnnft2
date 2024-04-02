@@ -5,7 +5,7 @@ pragma solidity ^0.8.9;
 import './base/UniversalChanIbcApp.sol';
 import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 
-contract PolyPTS is UniversalChanIbcApp, ERC20 {
+contract Dongqn is UniversalChanIbcApp, ERC20 {
     event TokenMint(address indexed receiver, uint256 amount);
     event TokenBurn(address indexed receiver, uint256 amount);
     event TransferSuccess();
