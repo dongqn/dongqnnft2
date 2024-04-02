@@ -1,8 +1,8 @@
 {
   "proofsEnabled": false,
   "deploy": {
-    "optimism": "PolyPTS",
-    "base": "PolyNFT"
+    "optimism": "Dongqn",
+    "base": "DongqnNFT"
   },
   "isUniversal": true,
   "createChannel": {
@@ -28,12 +28,12 @@
   },
   "sendUniversalPacket": {
     "optimism": {
-      "portAddr": "0x50845E818229fFE8Eb39dcB77541a447285b446F",
+      "portAddr": "0x90F076ae2F204A0E726909a1D64295D7871783Ba",
       "channelId": "channel-10",
       "timeout": 36000
     },
     "base": {
-      "portAddr": "0x01d4a540743D717C311a86C5fE8Bff5a46AaBd9A",
+      "portAddr": "0x90F076ae2F204A0E726909a1D64295D7871783Ba",
       "channelId": "channel-11",
       "timeout": 36000
     }
