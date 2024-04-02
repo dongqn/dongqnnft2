@@ -5,7 +5,7 @@ pragma solidity ^0.8.9;
 import './base/UniversalChanIbcApp.sol';
 import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
 
-contract PolyNFT is UniversalChanIbcApp, ERC721 {
+contract DongqnNFT is UniversalChanIbcApp, ERC721 {
     uint256 public currentTokenId = 0;
     string public tokenURIC4 = 'https://emerald-uncertain-cattle-112.mypinata.cloud/ipfs/QmZu7WiiKyytxwwKSwr6iPT1wqCRdgpqQNhoKUyn1CkMD3';
 
